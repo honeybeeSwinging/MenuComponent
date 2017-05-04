@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     self.title = @"主控制器";
-    self.view.backgroundColor = [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     
     FirstViewController *firstVC = [[FirstViewController alloc] init];
     SecondViewController *seconVC = [[SecondViewController alloc] init];
@@ -44,7 +44,7 @@
     
     MenuTabBarController *tabBarController = [[MenuTabBarController alloc] init];
     tabBarController.delegate = self;
-    tabBarController.scrollEnabled = NO;
+    tabBarController.scrollEnabled = YES;
     tabBarController.scrollAnimation = NO;
     tabBarController.font = [UIFont systemFontOfSize:15.0];
     tabBarController.indicatorColor = [UIColor blackColor];
@@ -55,7 +55,6 @@
     {
         case 0: //MenuTabBarTypeNormal
         {
-            tabBarController.scrollEnabled = YES;
             tabBarController.enlargeEnabled = YES;
             tabBarController.tabBarType = MenuTabBarTypeNormal;
             tabBarController.titleArray = _baseTitleArray;

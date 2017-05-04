@@ -155,6 +155,15 @@
         X += itemWidth;
     }
     
+    //## 更新contentSize
+    self.mainScrollView.contentSize = CGSizeMake(itemBtn.right, 0);
+    //## 底部边线
+    if (self.tabBarType == MenuTabBarTypeImage) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, self.height-0.5, self.width, 0.5);
+        layer.backgroundColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] CGColor];
+        [self.layer addSublayer:layer];
+    }
     //## 添加标示线
     if (self.tabBarType != MenuTabBarTypeArrow) {
         self.indicatorLine.backgroundColor = self.indicatorLineColor;
@@ -163,16 +172,9 @@
         UIButton *sender = [self.mainScrollView viewWithTag:100];
         self.indicatorLine.left = sender.left;
         self.indicatorLine.width = sender.width;
+    } else {  //滚动到最后一个
+        [self setCurrentIndex:count-1];
     }
-    //## 底部边线
-    if (self.tabBarType == MenuTabBarTypeImage) {
-        CALayer *layer = [CALayer layer];
-        layer.frame = CGRectMake(0, self.height-0.5, self.width, 0.5);
-        layer.backgroundColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.5] CGColor];
-        [self.layer addSublayer:layer];
-    }
-    //## 更新contentSize
-    self.mainScrollView.contentSize = CGSizeMake(itemBtn.right, self.mainScrollView.height);
 }
 
 #pragma mark - 点击事件
@@ -188,15 +190,14 @@
 {
     _currentIndex = currentIndex;
     UIButton *sender = [self.mainScrollView viewWithTag:100+_currentIndex];
-    if (sender.right > self.width) {
-        CGFloat offsetX = sender.right - self.width;
-        if (currentIndex < [_titleArray count] - 1) {
-            offsetX = offsetX + 40.0f;
-        }
-        [self.mainScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    } else {
-        [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    CGFloat offsetX = self.mainScrollView.contentOffset.x;
+    if (sender.left < offsetX) {
+        offsetX = sender.left;
     }
+    if (CGRectGetMaxX(sender.frame) > offsetX + self.width) {
+        offsetX = CGRectGetMaxX(sender.frame)-self.width;
+    }
+    [self.mainScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
     
     if (self.tabBarType != MenuTabBarTypeArrow) {
         [UIView animateWithDuration:0.2

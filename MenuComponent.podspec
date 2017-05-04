@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MenuComponent"
-  s.version          = "1.2"
+  s.version          = "1.3"
   s.summary          = "A menu component used on iOS."
   s.homepage         = "https://github.com/dexianyinjiu/MenuComponent"
   s.license          = 'MIT'
