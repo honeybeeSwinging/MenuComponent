@@ -110,6 +110,8 @@
         _menuTabBar.currentIndicatorColor = self.currentIndicatorColor;
         _menuTabBar.indicatorLineColor = self.indicatorLineColor;
         _menuTabBar.arrowImageName = self.arrowImageName;
+        _menuTabBar.layer.borderWidth = 0.5;
+        _menuTabBar.layer.borderColor = [UIColor colorWithRed:224.0/255.0 green:224.0/255.0 blue:224.0/255.0 alpha:1.0].CGColor;
         [_menuTabBar updateData];
     }
     return _menuTabBar;
