@@ -1,14 +1,14 @@
 //
-//  UIView+Category.m
+//  UIView+Geometry.m
 //  MenuComponent
 //
 //  Created by LEA on 2017/5/3.
 //  Copyright © 2017年 LEA. All rights reserved.
 //
 
-#import "UIView+Category.h"
+#import "UIView+Geometry.h"
 
-@implementation UIView (Category)
+@implementation UIView (Geometry)
 
 - (CGPoint)origin
 {
@@ -105,6 +105,30 @@
     CGRect newframe = self.frame;
     newframe.origin.x += delta ;
     self.frame = newframe;
+}
+
+- (CGFloat)centerX
+{
+    return self.center.x;
+}
+
+- (void)setCenterX:(CGFloat)centerX
+{
+    CGPoint newCenter = self.center;
+    newCenter.x = centerX;
+    self.center = newCenter;
+}
+
+- (CGFloat)centerY
+{
+    return self.center.y;
+}
+
+- (void)setCenterY:(CGFloat)centerY
+{
+    CGPoint newCenter = self.center;
+    newCenter.y = centerY;
+    self.center = newCenter;
 }
 
 @end

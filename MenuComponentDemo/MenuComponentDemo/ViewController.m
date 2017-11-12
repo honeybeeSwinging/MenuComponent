@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.title = @"示例";
+    self.title = @"Demo";
     self.view.backgroundColor = [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
     
     [self.view addSubview:self.tableView];
@@ -33,7 +33,7 @@
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.rowHeight = 50;
+        _tableView.rowHeight = 54;
     }
     return _tableView;
 }
@@ -46,7 +46,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,17 +59,13 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"MenuTabBarTypeNormal";
+        cell.textLabel.text = @"Normal";
     } else if (indexPath.row == 1) {
-        cell.textLabel.text = @"MenuTabBarTypeNormal";
+        cell.textLabel.text = @"Average";
     } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"MenuTabBarTypeAverage";
-    } else if (indexPath.row == 3) {
-        cell.textLabel.text = @"MenuTabBarTypeImage";
-    } else if (indexPath.row == 4) {
-        cell.textLabel.text = @"MenuTabBarTypeImage";
+        cell.textLabel.text = @"Image";
     } else {
-        cell.textLabel.text = @"MenuTabBarTypeArrow";
+        cell.textLabel.text = @"Arrow";
     }
     return cell;
 }

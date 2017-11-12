@@ -42,75 +42,59 @@
     _baseImageArray = [[NSArray alloc] initWithObjects:@"item_0",@"item_1",@"item_2",@"item_3",@"item_4",@"item_5", nil];
     _baseSubVCArray = [[NSArray alloc] initWithObjects:firstVC,seconVC,thirdVC,fourthVC,fifthVC,sixthVC, nil];
     
-    MenuTabBarController *tabBarController = [[MenuTabBarController alloc] init];
-    tabBarController.delegate = self;
-    tabBarController.scrollEnabled = YES;
-    tabBarController.scrollAnimation = NO;
-    tabBarController.font = [UIFont systemFontOfSize:15.0];
-    tabBarController.indicatorColor = [UIColor blackColor];
-    tabBarController.currentIndicatorColor = [UIColor redColor];
-    tabBarController.indicatorLineColor = [UIColor redColor];
+    MenuTabBarController *tabVC = [[MenuTabBarController alloc] init];
+    tabVC.delegate = self;
+    tabVC.scrollEnabled = YES;
+    tabVC.scrollAnimation = NO;
+    tabVC.font = [UIFont systemFontOfSize:15.0];
+    tabVC.textColor = [UIColor blackColor];
+    tabVC.indicatorTextColor = [UIColor redColor];
+    tabVC.indicatorLineColor = [UIColor redColor];
 
     switch (self.index)
     {
         case 0: //MenuTabBarTypeNormal
         {
-            tabBarController.enlargeEnabled = YES;
-            tabBarController.tabBarType = MenuTabBarTypeNormal;
-            tabBarController.titleArray = _baseTitleArray;
-            tabBarController.imageNameArray = _baseImageArray;
-            tabBarController.subViewControllers = _baseSubVCArray;
+            tabVC.enlargeEnabled = YES;
+            tabVC.tabBarType = MenuTabBarTypeNormal;
+            tabVC.titleArray = _baseTitleArray;
+            tabVC.imageNameArray = _baseImageArray;
+            tabVC.subViewControllers = _baseSubVCArray;
             break;
         }
-        case 1: //MenuTabBarTypeNormal
+        case 1: //MenuTabBarTypeAverage
         {
-            tabBarController.enlargeEnabled = YES;
-            tabBarController.tabBarType = MenuTabBarTypeNormal;
-            tabBarController.titleArray = [_baseTitleArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.imageNameArray = [_baseImageArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.subViewControllers = [_baseSubVCArray subarrayWithRange:NSMakeRange(0, 3)];
+            tabVC.enlargeEnabled = YES;
+            tabVC.tabBarType = MenuTabBarTypeAverage;
+            tabVC.titleArray = [_baseTitleArray subarrayWithRange:NSMakeRange(0, 3)];
+            tabVC.imageNameArray = [_baseImageArray subarrayWithRange:NSMakeRange(0, 3)];
+            tabVC.subViewControllers = [_baseSubVCArray subarrayWithRange:NSMakeRange(0, 3)];
             break;
         }
-        case 2: //MenuTabBarTypeAverage
+        case 2: //MenuTabBarTypeImage
         {
-            tabBarController.enlargeEnabled = YES;
-            tabBarController.tabBarType = MenuTabBarTypeAverage;
-            tabBarController.titleArray = [_baseTitleArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.imageNameArray = [_baseImageArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.subViewControllers = [_baseSubVCArray subarrayWithRange:NSMakeRange(0, 3)];
+            tabVC.enlargeEnabled = NO;
+            tabVC.tabBarHeight = 90.0;
+            tabVC.indicatorTextColor = [UIColor blackColor];
+            tabVC.tabBarType = MenuTabBarTypeImage;
+            tabVC.titleArray = _baseTitleArray;
+            tabVC.imageNameArray = _baseImageArray;
+            tabVC.subViewControllers = _baseSubVCArray;
             break;
         }
-        case 3: //MenuTabBarTypeImage
+        case 3: //MenuTabBarTypeArrow
         {
-            tabBarController.currentIndicatorColor = [UIColor blackColor];
-            tabBarController.tabBarType = MenuTabBarTypeImage;
-            tabBarController.titleArray = _baseTitleArray;
-            tabBarController.imageNameArray = _baseImageArray;
-            tabBarController.subViewControllers = _baseSubVCArray;
-            break;
-        }
-        case 4: //MenuTabBarTypeImage
-        {
-            tabBarController.currentIndicatorColor = [UIColor blackColor];
-            tabBarController.tabBarType = MenuTabBarTypeImage;
-            tabBarController.titleArray = [_baseTitleArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.imageNameArray = [_baseImageArray subarrayWithRange:NSMakeRange(0, 3)];
-            tabBarController.subViewControllers = [_baseSubVCArray subarrayWithRange:NSMakeRange(0, 3)];
-            break;
-        }
-        case 5: //MenuTabBarTypeArrow
-        {
-            tabBarController.arrowImageName = @"item_arrow";
-            tabBarController.tabBarType = MenuTabBarTypeArrow;
-            tabBarController.titleArray = _baseTitleArray;
-            tabBarController.imageNameArray = _baseImageArray;
-            tabBarController.subViewControllers = _baseSubVCArray;
+            tabVC.arrowImageName = @"item_arrow";
+            tabVC.tabBarType = MenuTabBarTypeArrow;
+            tabVC.titleArray = _baseTitleArray;
+            tabVC.imageNameArray = _baseImageArray;
+            tabVC.subViewControllers = _baseSubVCArray;
             break;
         }
         default:
             break;
     }
-    [tabBarController setParentController:self];
+    [tabVC setParentController:self];
 }
 
 #pragma mark - MenuTabBarControllerDelegate

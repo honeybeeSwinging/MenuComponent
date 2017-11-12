@@ -10,9 +10,10 @@
 
 @interface MenuTabBarController ()<MenuTabBarDelegate,UIScrollViewDelegate>
 
-@property (nonatomic,strong) MenuTabBar *menuTabBar;
-@property (nonatomic,strong) UIScrollView *mainScrollView;
-
+// 滚动视图
+@property (nonatomic,strong) UIScrollView *scrollView;
+// 菜单
+@property (nonatomic,strong) MenuTabBar *tabBar;
 
 @end
 
@@ -22,21 +23,21 @@
 {
     [super viewDidLoad];
     
-    //顶部视图[菜单]
-    [self.view addSubview:self.menuTabBar];
-    //子控制器视图
-    [self.view addSubview:self.mainScrollView];
+    // 添加子视图
+    [self.view addSubview:self.tabBar];
+    [self.view addSubview:self.scrollView];
+    // 添加子控制区和视图
     [self.subViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         UIViewController *subVC = (UIViewController *)self.subViewControllers[idx];
-        subVC.view.frame = CGRectMake(idx * self.view.width, 0, self.view.width, self.mainScrollView.height);
+        subVC.view.frame = CGRectMake(idx * self.view.width, 0, self.view.width, self.scrollView.height);
         subVC.view.tag = idx+100;
-        [self.mainScrollView addSubview:subVC.view];
+        [self.scrollView addSubview:subVC.view];
         [self addChildViewController:subVC];
     }];
-    self.mainScrollView.scrollEnabled = self.scrollEnabled;
+    self.scrollView.scrollEnabled = self.scrollEnabled;
     if (self.tabBarType == MenuTabBarTypeArrow) {
-        self.mainScrollView.contentOffset = CGPointMake(self.mainScrollView.width*(self.subViewControllers.count-1), 0);
-        self.mainScrollView.scrollEnabled = NO;
+        self.scrollView.contentOffset = CGPointMake(self.scrollView.width*(self.subViewControllers.count-1), 0);
+        self.scrollView.scrollEnabled = NO;
     }
 }
 
@@ -49,49 +50,49 @@
 
 - (void)updateData
 {
-    self.menuTabBar.titleArray = self.titleArray;
-    self.menuTabBar.imageNameArray = self.imageNameArray;
-    [self.menuTabBar updateData];
-    
+    self.tabBar.titleArray = self.titleArray;
+    self.tabBar.imageNameArray = self.imageNameArray;
+    [self.tabBar updateData];
+    // 移除
     for (UIViewController *subVC in self.childViewControllers) {
         [subVC removeFromParentViewController];
         [subVC.view removeFromSuperview];
     }
-    
+    // 重新加载
     [self.subViewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         UIViewController *subVC = (UIViewController *)self.subViewControllers[idx];
-        subVC.view.frame = CGRectMake(idx * self.view.width, 0, self.view.width, self.mainScrollView.height);
+        subVC.view.frame = CGRectMake(idx * self.view.width, 0, self.view.width, self.scrollView.height);
         subVC.view.tag = idx+100;
-        [self.mainScrollView addSubview:subVC.view];
+        [self.scrollView addSubview:subVC.view];
         [self addChildViewController:subVC];
     }];
     if (self.tabBarType == MenuTabBarTypeArrow) {
-        self.mainScrollView.contentOffset = CGPointMake(self.mainScrollView.width*(self.subViewControllers.count-1), 0);
+        self.scrollView.contentOffset = CGPointMake(self.scrollView.width*(self.subViewControllers.count-1), 0);
     }
 }
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    _currentIndex = scrollView.contentOffset.x / self.mainScrollView.width;
-    [self.menuTabBar setCurrentIndex:_currentIndex];
+    _currentIndex = scrollView.contentOffset.x / self.scrollView.width;
+    [self.tabBar setCurrentIndex:_currentIndex];
 }
 
 #pragma mark - MMSubViewDelegate
 - (void)menuTabBar:(MenuTabBar *)menuTabBar didSelectAtIndex:(NSInteger)index
 {
     if (self.tabBarType != MenuTabBarTypeArrow) {
-        [self.mainScrollView setContentOffset:CGPointMake(self.mainScrollView.width*index, 0) animated:self.scrollAnimation];
+        [self.scrollView setContentOffset:CGPointMake(self.scrollView.width*index, 0) animated:self.scrollAnimation];
     }
     if ([self.delegate respondsToSelector:@selector(tabBarController:didSelectAtIndex:)]) {
         [self.delegate tabBarController:self didSelectAtIndex:index];
     }
 }
 
-#pragma mark - getter
-- (MenuTabBar *)menuTabBar
+#pragma mark - 懒加载
+- (MenuTabBar *)tabBar
 {
-    if (!_menuTabBar) {
+    if (!_tabBar) {
         CGFloat height = self.tabBarHeight;
         if (height == 0) {
             height = kMinMenuHeight;
@@ -99,35 +100,35 @@
                 height = kMaxMenuHeight;
             }
         }
-        _menuTabBar = [[MenuTabBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, height)];
-        _menuTabBar.delegate = self;
-        _menuTabBar.font = self.font;
-        _menuTabBar.tabBarType = self.tabBarType;
-        _menuTabBar.titleArray = self.titleArray;
-        _menuTabBar.imageNameArray = self.imageNameArray;
-        _menuTabBar.enlargeEnabled = self.enlargeEnabled;
-        _menuTabBar.indicatorColor = self.indicatorColor;
-        _menuTabBar.currentIndicatorColor = self.currentIndicatorColor;
-        _menuTabBar.indicatorLineColor = self.indicatorLineColor;
-        _menuTabBar.arrowImageName = self.arrowImageName;
-        _menuTabBar.layer.borderWidth = 0.5;
-        _menuTabBar.layer.borderColor = [UIColor colorWithRed:224.0/255.0 green:224.0/255.0 blue:224.0/255.0 alpha:1.0].CGColor;
-        [_menuTabBar updateData];
+        _tabBar = [[MenuTabBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, height)];
+        _tabBar.delegate = self;
+        _tabBar.font = self.font;
+        _tabBar.tabBarType = self.tabBarType;
+        _tabBar.enlargeEnabled = self.enlargeEnabled;
+        _tabBar.textColor = self.textColor;
+        _tabBar.indicatorTextColor = self.indicatorTextColor;
+        _tabBar.indicatorLineColor = self.indicatorLineColor;
+        _tabBar.titleArray = self.titleArray;
+        _tabBar.imageNameArray = self.imageNameArray;
+        _tabBar.arrowImageName = self.arrowImageName;
+        _tabBar.layer.borderWidth = 0.5;
+        _tabBar.layer.borderColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5].CGColor;
+        [_tabBar updateData];
     }
-    return _menuTabBar;
+    return _tabBar;
 }
 
-- (UIScrollView *)mainScrollView
+- (UIScrollView *)scrollView
 {
-    if (!_mainScrollView) {
-        _mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.menuTabBar.bottom, self.view.width, self.view.height-self.menuTabBar.bottom)];
-        _mainScrollView.backgroundColor = [UIColor clearColor];
-        _mainScrollView.showsHorizontalScrollIndicator = NO;
-        _mainScrollView.pagingEnabled = YES;
-        _mainScrollView.delegate = self;
-        _mainScrollView.contentSize = CGSizeMake(self.view.width*self.subViewControllers.count, _mainScrollView.height);
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.tabBar.bottom, self.view.width, self.view.height-self.tabBar.bottom)];
+        _scrollView.backgroundColor = [UIColor clearColor];
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.pagingEnabled = YES;
+        _scrollView.delegate = self;
+        _scrollView.contentSize = CGSizeMake(self.view.width*self.subViewControllers.count, _scrollView.height);
     }
-    return _mainScrollView;
+    return _scrollView;
 }
 
 #pragma mark -
