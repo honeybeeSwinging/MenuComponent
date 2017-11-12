@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, MenuTabBarType) {
 };
 ```
 
-`MenuTabBarController`属性：
+MenuTabBarController属性：
   
 ```objc
 // 代理
