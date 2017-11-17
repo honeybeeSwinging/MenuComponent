@@ -34,6 +34,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.rowHeight = 54;
+        _tableView.scrollEnabled = NO;
     }
     return _tableView;
 }
