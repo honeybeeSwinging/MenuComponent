@@ -46,6 +46,7 @@
     tabVC.delegate = self;
     tabVC.scrollEnabled = YES;
     tabVC.scrollAnimation = NO;
+    tabVC.enlargeEnabled = YES;
     tabVC.font = [UIFont systemFontOfSize:15.0];
     tabVC.textColor = [UIColor blackColor];
     tabVC.indicatorTextColor = [UIColor redColor];
@@ -55,7 +56,6 @@
     {
         case 0: //MenuTabBarTypeNormal
         {
-            tabVC.enlargeEnabled = YES;
             tabVC.tabBarType = MenuTabBarTypeNormal;
             tabVC.titleArray = _baseTitleArray;
             tabVC.imageNameArray = _baseImageArray;
@@ -64,7 +64,6 @@
         }
         case 1: //MenuTabBarTypeAverage
         {
-            tabVC.enlargeEnabled = YES;
             tabVC.tabBarType = MenuTabBarTypeAverage;
             tabVC.titleArray = [_baseTitleArray subarrayWithRange:NSMakeRange(0, 3)];
             tabVC.imageNameArray = [_baseImageArray subarrayWithRange:NSMakeRange(0, 3)];
@@ -73,10 +72,9 @@
         }
         case 2: //MenuTabBarTypeImage
         {
+            tabVC.tabBarType = MenuTabBarTypeImage;
             tabVC.enlargeEnabled = NO;
             tabVC.tabBarHeight = 90.0;
-            tabVC.indicatorTextColor = [UIColor blackColor];
-            tabVC.tabBarType = MenuTabBarTypeImage;
             tabVC.titleArray = _baseTitleArray;
             tabVC.imageNameArray = _baseImageArray;
             tabVC.subViewControllers = _baseSubVCArray;

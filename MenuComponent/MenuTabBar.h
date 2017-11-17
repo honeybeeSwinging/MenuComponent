@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MenuTabBarType) {
 @property (nonatomic,strong) NSArray *titleArray;
 // 图片名称数组
 @property (nonatomic,strong) NSArray *imageNameArray;
-// MenuTabBarTypeArrow类型下的arrow图片名称
+// MenuTabBarTypeArrow类型下的arrow图片名称[不可为空]
 @property (nonatomic,copy) NSString *arrowImageName;
 // 当前选择的Index
 @property (nonatomic,assign) NSInteger currentIndex;

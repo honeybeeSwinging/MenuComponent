@@ -54,7 +54,7 @@
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     // 是否点击变大
     _largeFont = _font;
-    if (self.enlargeEnabled) {
+    if (self.enlargeEnabled && self.tabBarType != MenuTabBarTypeArrow) {
         _largeFont = [UIFont fontWithName:_font.fontName size:_font.pointSize + 2];
     }
     // 重新添加视图
