@@ -27,6 +27,11 @@
     [rootNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"default_top_bar"] forBarMetrics:UIBarMetricsDefault];
     self.window.rootViewController = rootNav;
     [self.window makeKeyAndVisible];
+    
+    // 滚动视图设置
+    if (@available(iOS 11.0, *)) {
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    }
     return YES;
 }
 
