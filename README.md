@@ -37,6 +37,8 @@ MenuTabBarController属性：
 @property (nonatomic,assign) id<MenuTabBarControllerDelegate> delegate;
 // 类型
 @property (nonatomic,assign) MenuTabBarType tabBarType;
+// 菜单
+@property (nonatomic,strong) MenuTabBar *tabBar;
 // 子控制器是否可以滑动 [默认NO]
 @property (nonatomic,assign) BOOL scrollEnabled;
 // 点击切换是否有动画 [默认NO]

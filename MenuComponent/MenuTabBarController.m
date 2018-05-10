@@ -12,8 +12,6 @@
 
 // 滚动视图
 @property (nonatomic,strong) UIScrollView *scrollView;
-// 菜单
-@property (nonatomic,strong) MenuTabBar *tabBar;
 
 @end
 

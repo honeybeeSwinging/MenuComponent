@@ -170,6 +170,8 @@
         UIButton *sender = [self.scrollView viewWithTag:100];
         self.indicatorLine.left = sender.left;
         self.indicatorLine.width = sender.width;
+        _currentIndex = 0;
+        _preIndex = 0;
     } else {  // 滚动到最后一个
         [self setCurrentIndex:count-1];
     }
